@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{The model}{6}{0}{1}
+\beamer@subsectionintoc {1}{1}{Dirac + ($p+ip$)}{7}{0}{1}
+\beamer@sectionintoc {2}{Second-order topology}{21}{0}{2}
+\beamer@subsectionintoc {2}{1}{Dirac + ($p+ip$) with $\mathsf {C}_4$ symmetry}{22}{0}{2}

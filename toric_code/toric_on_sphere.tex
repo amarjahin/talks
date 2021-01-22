@@ -1,0 +1,45 @@
+\documentclass[crop,tikz]{standalone}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{decorations.markings, backgrounds, calc}
+\tikzset{>=latex}
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
+\begin{document}
+\tdplotsetmaincoords{70}{130}
+\begin{tikzpicture}[tdplot_main_coords, line join = round]
+
+\coordinate (O) at (0,0,0);
+\tdplotsetcoord{P}{4}{55}{45}
+
+% \draw[color=black,fill=black!30!white,opacity=0.9] (Px) -- (Pxy) -- (P) -- (Pxz) -- cycle;
+
+% \draw[color=black,fill=black!30!white,opacity=0.9] (P) -- (Pyz) -- (Py) -- (Pxy) -- cycle;
+
+% \draw[color=black,fill=black!30!white,opacity=0.9] (P) -- (Pyz) -- (Pz) -- (Pxz) -- cycle;
+
+% \draw[color=black] (Px) -- (Pxy) -- (P) -- (Pxz) -- cycle;
+
+% \draw[color=black] (P) -- (Pyz) -- (Py) -- (Pxy) -- cycle;
+
+% \draw[color=black] (P) -- (Pyz) -- (Pz) -- (Pxz) -- cycle;
+
+\foreach \i in {0,0.2,...,1}
+{
+    \draw[line cap = rect, gray!40] ($(Px) + \i *(Pz)$) -- ($(Px) + \i *(Pz) + (Py)$) -- ($\i *(Pz) + (Py)$);
+
+    \draw[line cap = rect, gray!40] ($(Px) + \i *(Py)$) -- ($(Px) + \i *(Py) + (Pz)$) -- ($\i *(Py) + (Pz)$);
+
+    \draw[line cap = rect, gray!40] ($(Pz) + \i *(Px)$) -- ($(Pz) + \i *(Px) + (Py)$) -- ($\i *(Px) + (Py)$);
+}
+
+\draw[thick, black] ($(P) - 0.1*(Px) - 0.1*(Py)$) -- ($(P) - 0.1*(Px)$) -- ($(P) - 0.1*(Px) - 0.1*(Pz)$) -- ($(P) - 0.1*(Pz)$) -- ($(P) - 0.1*(Pz) - 0.1*(Py)$) -- ($(P)  - 0.1*(Py)$) -- cycle;
+
+\draw[thick, black] ($(Px) + 0.2*(Pyz)$) -- ($(Px) + 0.2*(Pyz) + 0.2*(Py)$) -- ($(Px) + 0.4*(Pyz)$) -- ($(Px) + 0.2*(Pyz) + 0.2*(Pz)$) -- cycle;
+
+\draw[thick, black] ($(P)-0.5*(Pz) - 0.1*(Py)$) -- ($(P)-0.5*(Pz)$) -- ($(P)-0.5*(Pz) - 0.1*(Px)$) -- ($(P)-0.3*(Pz) - 0.1*(Px)$) -- ($(P)-0.3*(Pz)$) --  ($(P)-0.3*(Pz) - 0.1*(Py)$) -- cycle;
+
+\draw[thick, black] ($(P)-0.5*(Pz) - 0.5*(Px)$) -- ($(P)-0.5*(Pz) - 0.7*(Px)$) -- ($(P)-0.3*(Pz) - 0.7*(Px)$) -- ($(P)-0.3*(Pz) - 0.5*(Px)$) -- cycle;
+\end{tikzpicture}
+
+\end{document} 

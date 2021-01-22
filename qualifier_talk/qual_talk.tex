@@ -1,0 +1,771 @@
+\documentclass{beamer}
+\setbeamertemplate{section in toc}[sections numbered]
+\usefonttheme[onlymath]{serif}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}{% 
+  \hfill% 
+  \usebeamercolor[gray!50]{page number in head/foot}% 
+  \usebeamerfont{page number in head/foot}% 
+  \insertframenumber\,/\,\inserttotalframenumber%
+}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage[round]{natbib}
+\usepackage{tabularx}
+\usepackage{physics}
+\usepackage{color}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{bbold}
+\usepackage{tikz}
+\usepackage{empheq}
+\usepackage{stackengine}
+\usepackage{framed}
+\usepackage[percent]{overpic}
+\usepackage[export]{adjustbox}
+\usepackage{simpler-wick}
+\DeclareMathOperator{\sgn}{sgn}
+\tikzset{>=latex}
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\newcommand{\md}{\mathrm{d}}
+\newcommand{\ms}{\mathsf}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mc}{\mathcal}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\renewcommand{\[}{\left[}
+\renewcommand{\]}{\right]}
+
+%Information to be included in the title page:
+\title{Chiral Dirac Superconductors: Second-order and Boundary-obstructed Topology}
+%\author{Apoorv Tiwar, Ammar Jahin, and Yuxuan Wang}
+%\institute{University of Florida}
+\date{University of Florida, December}
+
+\begin{document}
+\frame{\titlepage} 
+
+\begin{frame}
+    \frametitle{Outline}
+
+    \tableofcontents
+\end{frame}
+
+\section{Introduction---Topological bands}
+\begin{frame}
+    \frametitle{Bands structure}
+    Electrons on a lattice can be described by local degrees of freedom, 
+    \begin{columns}
+        \begin{column}{0.7\textwidth}
+            \begin{align*}
+                a^\dagger_i(\bm R) \ket{0} = \ket{\bm R \ i} 
+            \end{align*}
+            \vfill
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \centering
+            \includegraphics[]{square_lattice.pdf}
+            \vfill
+        \end{column}
+    \end{columns}
+    \begin{itemize}
+        \item $\bm R$ label lattice coordinate.
+        \item $i$ label \emph{internal} degrees of freedom.
+    \end{itemize}\pause
+    For free electrons, 
+    \begin{columns}
+        \begin{column}{0.7\textwidth}
+            \begin{align*}
+                &\ket{\bm k\  i} = \sum_{\bm R} e^{i\bm k \cdot \bm R} \ket{\bm R \ i}, \ \  a^{\dagger}(\bm k) \ket{0} = \ket{\bm k \ i} \\
+                &H = \int \frac{d\bm k}{(2\pi)^{d}} \  a^\dagger_i(\bm k) \mc H^{ij}(\bm k) a_j(\bm k)
+            \end{align*}
+            \vfill
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \centering
+            \includegraphics[]{square_recep_lattice.pdf}
+            \vfill
+        \end{column}
+    \end{columns}
+    \begin{itemize}
+        \item Translational symmetry $\rightarrow$ conservation of crystal momentum.
+        \item Diagonalizing the Hamiltonian we end up with a set of bands. 
+        \item We will refer to $\mc H(\bm k)$ as the Hamiltonian.
+        \item We are interested in gapped systems (insulators).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Topology of the occupied bands}
+    Suppose we are studying systems with some symmetry group. Define an equivalence between $\mc H^0(\bm k)$ and $\mc H^1(\bm k)$:
+    \begin{framed}
+        \begin{center}
+            $\mc H^0(\bm k) \approx \mc H^1(\bm k)$ iff $\exists$
+        \end{center}
+        \begin{itemize}
+            \item $\ \mc H(\bm k, t)$;  $\mc H(\bm k,0) = \mc H^0(\bm k)$, $\mc H(\bm k,1) = \mc H^1(\bm k)$, 
+            \item $\mc H(\bm k,t)$ for all values of $t \in [0,1]$ is: 
+            \begin{enumerate}
+                \item Gapped
+                \item Preserve the symmetry
+            \end{enumerate}
+        \end{itemize}
+    \end{framed}  \pause
+    \begin{itemize}
+        \item This can be thought as deforming the occupied (and empty bands) bands from those of $\mc H^0(\bm k)$ to those of $\mc H^1(\bm k)$. 
+        \item If this deformation is possible, then the occupied bands of $\mc H^0(\bm k)$ and $\mc H^1(\bm k)$ are topologically equivalent.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Topological classification}
+
+    \begin{itemize}
+        \item Topological classification require a survey of all possible gapped Hamiltonian and grouping them into equivalence classes under the restrictions of some symmetry group. 
+    \end{itemize}
+    \centering
+    \includegraphics[]{hams_space.pdf}
+    \begin{itemize}
+        \item Find topological invariants that differentiate one class from the other. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Superconductors}
+    The Bogoliubov-de Gennes (BdG) form for superconducting Hamiltonian, 
+    \begin{align*}
+        H =\frac{1}{2}\int \frac{d\bm k}{(2\pi)^{d}}  \  \mqty{\mqty[\Psi^\dagger(\bm k)  \Psi^T(-\bm k)] \\ \mbox{}}
+        \mqty[\mc H_n(\bm k) && \Delta(\bm k) \\ 
+        \Delta^\dagger (\bm k) && -\mc H^*_n(-\bm k)] \mqty[\Psi(\bm k) \\ 
+        \Psi^*(-\bm k)]
+    \end{align*}
+    \begin{itemize}
+        \item $\Psi^\dagger(\bm k) = (a^\dagger_1(\bm k), \dots, a^\dagger_N(\bm k))$.
+        \item $\mc H_n(\bm k)$ is the normal state Hamiltonian.
+        \item $\Delta(\bm k)$ is the superconducting order parameter.
+        \item The BdG Hamiltonian $ \mc H(\bm k) = \mqty[\mc H_n(\bm k) && \Delta(\bm k) \\ 
+        \Delta^\dagger (\bm k) && -\mc H^*_n(-\bm k)]$ allows us to study the topology of superconductors within the same framework as insulating Hamiltonians. 
+        \item BdG Hamiltonians has an \emph{intrinsic} particle-hole symmetry. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Internal symmetries}
+    \begin{framed}
+        Internal symmetries are those that do not change the positions of the particles: $\bm R \rightarrow \bm R$. 
+    \end{framed}
+    \pause
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Three important internal symmetries: 
+            \begin{itemize}
+                \item Time-reversal symmetry ($\mc T$)
+                \item Particle-hole symmetry ($ \mc P$)
+                \item Chiral symmetry ($\mc C = \mc P \mc T$)
+            \end{itemize}
+            \begin{framed}
+                Complete topological classification exists for the $10$ Altland-Zirnbauer (AZ) classes. \citet*{Teo_Kane_2010}
+            \end{framed}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{table}[t]
+                \centering
+                \begin{tabularx}{0.95\textwidth}{>{\centering\arraybackslash}X |>{\centering\arraybackslash}X |>{\centering\arraybackslash}X |>{\centering\arraybackslash}X}
+                    \hline
+                    \hline
+                    \rule{0pt}{3ex}   
+                    AZ  & $\mc T^2$ & $\mc P^2$ & $\mc C^2$ \\
+                    \hline  
+                    A   &    0      &0          & 0  \\       
+                    AIII&    0      &0          & 1  \\         
+                    \hline 
+                    AI  &    1      &  0        & 0  \\         
+                    BDI &    1      &  1        & 1  \\         
+                    D   &    0      &  1        & 0  \\         
+                    DIII&   -1      &  1        & 1  \\         
+                    AII &   -1      &  0        & 0  \\         
+                    CII &   -1      & -1        & 1  \\         
+                    C   &    0      & -1        & 0  \\         
+                    CI  &    1      & -1        & 1  \\
+                    \hline         
+                \end{tabularx} 
+            \end{table}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Gapless boundaries}
+    \begin{center}
+        \includegraphics[scale = 0.88]{smooth_boundary.pdf}
+    \end{center}
+    \begin{itemize}
+        \item A boundary interpolates between a topological system and the vacuum. 
+        \item Internal symmetries are not broken on the boundary.
+    \end{itemize}
+    \pause
+    \begin{framed}
+        Topological systems protected by internal symmetries \emph{only} will in general have gapless boundaries. 
+    \end{framed}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Examples}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \underline{In $2$D:}\\
+            Chern insulators. \\
+            Protecting symmetries: None. \\
+            Topological invariant: Chern number.
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{center}
+                \includegraphics[valign=c]{first_order_boundary.pdf} 
+            \end{center}
+        \end{column}
+    \end{columns}
+    \pause
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \underline{In $1$D:}\\
+            SSH chain. \\
+            Protecting symmetry: Chiral symmetry\\
+            Topological invariant: Polarization 
+        \end{column}
+
+        \begin{column}{0.4\textwidth}
+            \begin{center}
+                \includegraphics[scale=0.88, trim = 0 50 265 10, clip, valign=c]{cheap_corner.pdf}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+
+\end{frame}
+
+
+
+\AtBeginSection[]
+{
+\begin{frame}
+    \frametitle{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
+}
+
+\section{Higher-order topology and boundary-obstructed topologies}
+\begin{frame}
+    \frametitle{Higher-order topology}
+
+    Can we find topological systems systems with gapped boundaries?
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[valign=c]{first_order_boundary.pdf} 
+            \end{center}
+            First-order topology; gapless mode on boundaries of co-dimension 1. 
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[valign=c]{second_order_surface.pdf}
+            \end{center}
+            Second-order topology; gapless mode on boundaries of co-dimension 2. 
+        \end{column}
+    \end{columns} 
+    \begin{framed}
+        The protecting symmetry must be broken on the boundary. Internal symmetries are not enough. 
+    \end{framed}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Spatial symmetries}
+
+    \begin{framed}
+        Spatial symmetries are those that change the position of the particles. $\bm R \rightarrow \bm R^\prime$.
+    \end{framed}
+    Examples of spacial symmetries: 
+    \begin{align*}
+        C_4 : (R_x, R_y) \rightarrow (-R_y, R_x) && C_2 : (R_x, R_y) \rightarrow (-R_x, -R_y)
+    \end{align*}
+    \centering
+    \includegraphics[]{second_order_surface.pdf}
+
+    $C_4$ and $C_2$ are broken on the boundaries.  
+\end{frame}
+
+\begin{frame}
+    \frametitle{A cheap way to get corner modes}
+    \begin{center}
+        \includegraphics[scale=0.85]{cheap_corner.pdf}
+    \end{center}
+    \begin{itemize}
+        \item These corner zero modes are not protected by a bulk gap. 
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Higher-order and boundary-obstructed topologies}
+    \centering 
+    \includegraphics[]{seond_order_boudary.pdf}
+
+    \vspace{5pt}
+    Second-order topology 
+    \vfill
+    \includegraphics[]{boundary_obstructed.pdf}
+
+    \vspace{5pt}
+    Boundary-obstructed topology
+
+    \begin{itemize}
+        \item What kinds of system would show such surface signature?
+        \item What kinds of topological invariants we can find?
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Summary}
+
+    \begin{itemize}
+        \item Topological band systems are those that cannot be deformed to the vacuum without: \begin{enumerate}
+            \item Closing a gap
+            \item Breaking the symmetry
+        \end{enumerate}
+        \item Topologies protected by internal symmetries alone lead to first-order topology (gapless boundaries). 
+        \item Including spatial symmetries can lead to a much richer topological structure. 
+        \item Higher-order topologies have gapless modes on boundaries with co-dimension higher than one. 
+        \item Boundary-obstructed topologies are only protected by a boundary gap closing. 
+    \end{itemize}    
+
+\end{frame}
+
+\section{Chiral Dirac higher-order topological superconductors}
+\begin{frame}
+    \centering
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[trim= 0 20 0 20,clip]{Screenshot_20200516_213116.png}
+
+            Apoorv Tiwari
+            
+            University of Zurich
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[scale=0.4]{YWSC.png}
+
+            Yuxuan Wang 
+
+            University of Florida
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A concrete model}
+
+    \begin{align*}
+        \mc H(\bm k) = &\[\gamma_x + \cos(k_x)\] \sigma_x \tau_z + \[\gamma_y + \cos(k_y)\] \sigma_z \tau_z -\mu \tau_z  \nonumber \\
+        & + \Delta \sin(k_x) \tau_y + \Delta \sin(k_y) \tau_x 
+    \end{align*}
+    \begin{center}
+        $4$ Majorana corner zero modes. \citet*{Wang_Lin_Hughes_2018}
+
+        \includegraphics[scale=0.7, trim = 5 0 10 0,clip, valign=c]{super_4_energy_cylinder.pdf}
+        \includegraphics[scale=0.7, trim = 9 0 10 0,clip, valign=c]{super_4_open_boundary_zero_modes.pdf}
+        \includegraphics[scale=0.62, trim = 0 0 0 15, clip, valign=c]{super_4_open_boundary_zero_modes_real_space.pdf}
+    
+        $\gamma_x = \gamma_y = 0.2,\  \Delta = 0.4,\  \mu = 0.5 $
+    \end{center}
+
+    \pause
+    \begin{framed}
+        Can we abstract a sufficient condition that would guarantee the existence of the Majorana zero modes? 
+    \end{framed}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A more general model---a sufficient condition }
+    \begin{columns}[t]
+        \begin{column}{0.6\textwidth}
+            $\mc H(\bm k) = f_1(\bm k) \sigma_x \tau_z + f_2(\bm k) \sigma_z \tau_z -\mu \tau_z $
+            \centering
+            \includegraphics[]{normal_stateBZ.pdf}
+
+            $f_{1,2}(\pm \bm K) = f_{1,2}(\pm \bm K^\prime) =  0$
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            $+ \Delta_1(\bm k) \tau_y + \Delta_2(\bm k) \tau_x$
+
+            \vspace{20pt}
+            $p+ip$ order parameter. 
+        \end{column}
+    \end{columns}\pause
+    \begin{framed}
+        \begin{itemize}
+            \item With $C_4$ symmetry the model has a second-order topological phase with corner Majorana zero modes. 
+            \item With only $C_2$ symmetry the model has a boundary-obstructed phase with corner Majorana zero modes.
+        \end{itemize}
+    \end{framed}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fourfold rotation symmetry}
+    \begin{center}
+        $\mc H(\bm k) = f_1(\bm k) \sigma_x \tau_z + f_2(\bm k) \sigma_z \tau_z -\mu \tau_z + \Delta_1(\bm k) \tau_y + \Delta_2(\bm k) \tau_x$
+    \end{center}
+    \begin{align*}
+        &\mc P \mc H(\bm k) \mc P^{-1} = -\mc H(-\bm k), && \mc P = \tau_x K \\
+        &C_4 \mc H(k_x, k_y) C_4^{-1} = \mc H(-k_y, k_x), && C_4 = \frac{1}{\sqrt{2}} (\sigma_x + \sigma_y) e^{-i\frac{\pi}{4}\tau_z} \nonumber 
+    \end{align*}
+
+    \underline{Symmetry constraints}:
+    \begin{gather*}
+        f_{1}(k_x, k_y) = f_2(-k_y, k_x) \\ 
+        f_{1,2}(-\bm k) = f_{1,2}(\bm k), \ \ \  \Delta_{1,2}(-\bm k) = -\Delta_{1,2}(\bm k)
+    \end{gather*}\pause 
+    \underline{High-symmetry points}: 
+    \begin{itemize}
+        \item $C_4 : \{(0,0),\  (\pi,\pi)\} \rightarrow \{(0,0),\  (\pi,\pi)\}$ 
+        \item $C_2 : \{(0,\pi),\  (\pi,0)\} \rightarrow \{(0,\pi),\  (\pi,0)\}$ 
+    \end{itemize}
+    \vspace{10pt}
+    Define: 
+
+    $f_{\Gamma} \equiv f_{1}(0,0) = f_2(0,0), \ \ \  f_{M} \equiv f_{1}(\pi,\pi) = f_2(\pi,\pi)$
+\end{frame}
+
+\begin{frame}{Symmetry indicators}{Easy topological invariants 
+    to calculate}
+    \begin{center}
+        $\mc H(\bm k) = f_1(\bm k) \sigma_x \tau_z + f_2(\bm k) \sigma_z \tau_z -\mu \tau_z + \Delta_1(\bm k) \tau_y + \Delta_2(\bm k) \tau_x$
+    \end{center}
+    \begin{framed}
+        We first ignore that we are dealing with a BdG Hamiltonian and treat it as an insulating system (two occupied bands). We reinterpret the results for the BdG Hamiltonian in the end.  
+    \end{framed}
+    \pause
+   \begin{columns}
+       \begin{column}{0.5\textwidth}
+            \underline{High-symmetry points}: 
+            \begin{itemize}
+                \item $[\mc H(0,0), C_4] = 0$ \\ $ [\mc H(\pi,\pi), C_4] = 0$\vspace{5pt}
+                \item $[\mc H(0,\pi), C_2] = 0$ \\ $[\mc H(\pi,0), C_2] = 0$
+            \end{itemize}\pause
+            Symmetry operators eigenvalues at the high-symmetry points are topological invariants.
+        \end{column}
+       \begin{column}{0.5\textwidth}
+        \centering
+        \includegraphics[scale = 0.75]{super_4_wannier_rep.pdf}
+
+       \end{column}
+   \end{columns}
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Wannier centers} 
+%     \begin{itemize}
+%         \item We first ignore the fact that we are dealing with a BdG Hamiltonian and treat it like an insulator.
+%     \end{itemize}
+%     \begin{center}
+%         $\mc H(\bm k) = f_1(\bm k) \sigma_x \tau_z + f_2(\bm k) \sigma_z \tau_z -\mu \tau_z + \Delta_1(\bm k) \tau_y + \Delta_2(\bm k) \tau_x$
+%     \end{center}
+%     \begin{framed}
+%         What are the are the positions of the Wannier centers for the above model consistent with the $C_4$ symmetry? 
+%     \end{framed}
+%     \begin{itemize}
+%         \item The 
+%     \end{itemize}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Wannier centers} 
+%     \begin{center}
+%         $\mc H(\bm k) = f_1(\bm k) \sigma_x \tau_z + f_2(\bm k) \sigma_z \tau_z -\mu \tau_z + \Delta_1(\bm k) \tau_y + \Delta_2(\bm k) \tau_x$
+%     \end{center}
+%     \begin{framed}
+%         We first ignore the fact that we are dealing with a BdG Hamiltonian and treat it like an insulator.
+%     \end{framed}
+%     \begin{columns}[c]
+%         \begin{column}{0.5\textwidth}
+%             Points in the BZ invariant under $C_4$: $\bm k^* = \{(0,0), (\pi,\pi)\}$
+%             \begin{align*}
+%                 &\[C_4, H(\bm k^*)\] = 0 \\ 
+%                 &f_1(0,0) = f_2(0,0) = f_\Gamma \\
+%                 &f_1(\pi,\pi) = f_2(\pi,\pi) = f_M \\
+%             \end{align*}
+%             Points in the BZ only invariant under $C_2$: $\bm k^* = \{(\pi,0), (0,\pi)\}$
+%             \begin{align*}
+%                 \[C_2, H(\bm k^*)\] = 0 \\
+%             \end{align*}
+%         \end{column}\pause
+%         \begin{column}{0.5\textwidth}
+%             \centering
+%             \includegraphics[scale = 0.75]{super_4_wannier_rep.pdf}
+%             Symmetry operators eigenvalues at the high-symmetry points are topological invariants.
+%         \end{column}
+%     \end{columns}
+% \end{frame}
+
+\begin{frame}
+    \frametitle{Wannier centers}
+    \begin{columns}[c]
+        \begin{column}{0.75\textwidth}
+            \begin{framed}
+                Wannier centers must: 
+                \begin{itemize}
+                    \item Respect the $C_4$ symmetry. 
+                    \item Be consistent with the symmetry eigenvalues at the high-symmetry points.
+                \end{itemize}
+            \end{framed}
+        \end{column}
+        \begin{column}{0.25\textwidth}
+            \centering
+            \includegraphics[scale = 0.385]{super_4_wannier_rep.pdf}
+        \end{column}
+    \end{columns}
+    \vspace{10pt}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering 
+            \includegraphics<1>[scale=0.9]{empty_lattice_grid.pdf}
+            \includegraphics<2->[scale=0.9]{wannier_rep_trivial.pdf}
+            \visible<2->{$\sgn(f_\Gamma)\sgn(f_M) = 1$}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics<3->[scale=0.8]{wannier_rep_top.pdf}
+            \visible<3->{$\sgn(f_\Gamma)\sgn(f_M) = -1$}
+        \end{column}
+    \end{columns}
+    \visible<4->{
+    \begin{itemize}
+        \centering
+        \item These are two topologically distinct phases.
+    \end{itemize}}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Filling anomaly---Majorana corner modes}
+    \begin{columns}[b]
+        \begin{column}[c]{0.4\textwidth}
+            \begin{framed}
+                Filling anomaly means the system cannot be: 
+                \begin{enumerate}
+                    \item Neutral
+                    \item Gapped 
+                    \item $C_4$ symmetric
+                \end{enumerate}
+                \citet*{Khalaf_Benalcazar_Hughes_Queiroz_2019}
+            \end{framed}
+        \end{column}
+        \begin{column}[c]{0.6\textwidth}
+            \centering
+            \includegraphics[scale=0.65]{atomic_limit_half.pdf}
+            One orbital at each corner that can be either empty, or filled.
+        \end{column}
+    \end{columns}
+    \pause
+    \vspace{5pt}
+    What does the filling anomaly mean for the BdG Hamiltonian? 
+    \begin{itemize}
+        \item Filling anomaly means one state localized at each corner.  
+        \item Particle-hole symmetry is a local symmetry.
+        \item If $\ket{\Psi}$ is localized on one corner, so is $\ket{\mc P \Psi}$.
+        \item It must be that $\ket{\mc P\Psi} \propto \ket{\Psi}$; A Majorana zero mode. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Is the system in the topological phase?}
+    The condition for the topological phase is $\sgn(f_\Gamma)\sgn(f_M) = -1$. Is it true for our system? 
+    \begin{columns}[]
+        \begin{column}{0.5\textwidth}
+            \vspace{5pt}
+
+            $\mc H_n(\bm k) = f_1(\bm k) \sigma_x + f_2(\bm k) \sigma_z$
+            \hspace{1pt} 
+            \begin{itemize}
+                \item The Dirac point is a source of \emph{magnetic} field.
+                \item Berry phase gained when moving around the loop is $\pi$.
+            \end{itemize}
+            \begin{align*}
+                \hat{\bm n}(\bm k) \equiv \frac{f_1(\bm k) e_x + f_2(\bm k) e_z}{\sqrt{f_1^2(\bm k) + f^2_2(\bm k)}}
+            \end{align*}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[]{BZ_path.pdf}
+        \end{column}
+    \end{columns}
+    \begin{framed}
+        \centering
+        $N_\text{w} (\gamma \circ C_4 \gamma) = 2N_{\text{w}}(\gamma) = 1$
+
+        $\hat{\bm n}(0,0) = -\hat{\bm n}(\pi, \pi)$
+    \end{framed}
+\end{frame}
+
+\begin{frame}
+    \frametitle{}
+
+    \centering 
+    Now we break $C_4$ down to $C_2$. 
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Boundary-obstruction}
+
+    Going back to
+    \begin{align*}
+        \mc H(\bm k) = &\[\gamma_x + \cos(k_x)\] \sigma_x \tau_z + \[\gamma_y + \cos(k_y)\] \sigma_z \tau_z -\mu \tau_z  \nonumber \\
+        & + \Delta \sin(k_x) \tau_y + \Delta \sin(k_y) \tau_x 
+    \end{align*}
+
+    \begin{center}
+        \includegraphics[]{simple_phase_diagram.pdf}
+    \end{center}
+    \begin{itemize}
+        \item It can at best be boundary obstructed.
+    \end{itemize} 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Edge defect approach}
+    \begin{framed}
+        When $C_4$ is broken down to $C_2$ we no longer have a phase protected by bulk gap.
+    \end{framed}
+    \underline{Our approach}: 
+    \begin{enumerate}
+        \item Solve for the edge theory at each \emph{point} on a rounded corner, using knowledge of the low energy properties of the model. 
+        \item Show that the boundary properties, as derived from the bulk, lead to a Majorana corner zero mode. 
+    \end{enumerate}
+    \begin{columns}[]
+        \begin{column}{0.5\textwidth}
+            \centering 
+            \includegraphics[scale = 0.3]{corner_without_C4.png}
+        \end{column}\pause
+        \begin{column}{0.5\textwidth}
+            \begin{framed}
+                \centering
+                $h(q_{||}, \delta \theta) = \alpha q_{||} s_1 + m \delta \theta s_2 $
+            \end{framed}
+        \end{column}
+    \end{columns}
+    \begin{itemize}
+        \item Looks like a $1D$ Dirac equation with a mass domain wall, which we know host a zero mode at the domain wall. \citet*{Jackiw_Rebbi_1976}
+    \end{itemize}
+\end{frame}
+
+
+% \begin{frame}
+%     \frametitle{Surface theory}
+%     \begin{center}
+%         \includegraphics[scale = 0.3]{corner_without_C4.png} \hspace{10pt}
+%         \includegraphics[scale = 0.5]{boundary_directions.pdf}
+%     \end{center}
+
+%     \begin{itemize}
+%         \item For small pairing terms, the low energy theory of the system is near the Dirac points.
+%         \item Boundary mix momenta in the direction perpendicular to it. 
+%         \item The direction $\theta_0$ is special, mix momenta at $K$ and $-K$.
+%         \item Expand the Hamiltonian for small $\bm q$ near the Dirac points.  
+%         \item For $\theta = \theta_0$, and $q_{||}(\theta_0) = 0$, the system has $2$ zero modes:
+%     \end{itemize}
+%     \begin{gather*}
+%         \mc H_0(q_{\perp}, q_{||} = 0) = -i v_{\perp} \tilde{\sigma}_x \tau_z \nu_z \frac{\partial}{\partial r_{\perp}} + \Delta_0 \tilde{\tau}_x \nu_z, \\
+%         \psi^\alpha(r_{\perp}) = \chi^\alpha \sin(|\bm K| \ r_{\perp})\  e^{\Delta_0  r_\perp / v_{\perp}}, \ \ \  \alpha \in \{0,1\}
+%     \end{gather*}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Surface theory}
+%     Make two different perturbations:
+%     \begin{columns}[]
+%         \begin{column}{0.5\textwidth}
+%             \centering
+%             \includegraphics[scale=0.73, trim= 0 0 140 0,clip]{small_q_diviations.pdf}
+
+%             A small momentum deviation to get the dispersion. 
+%         \end{column}
+%         \begin{column}{0.5\textwidth}
+%             \centering 
+%             \includegraphics[scale=0.73, trim= 150 0 0 0,clip]{small_q_diviations.pdf}
+
+%             A small $\delta \theta$ deviation to get the the surface theories at angles $\theta = \theta_0 +\delta \theta$
+%         \end{column}
+%     \end{columns}\pause
+%     \begin{columns}[]
+%         \begin{column}{0.5\textwidth}
+%             \begin{framed}
+%                 \centering
+%                 $h(q_{||}, \delta \theta) = \alpha q_{||} s_1 + m \delta \theta s_2 $
+%             \end{framed}
+%         \end{column}
+%         \begin{column}{0.5\textwidth}
+%             \centering 
+%             \includegraphics[scale = 0.3]{corner_without_C4.png}
+%         \end{column}
+%     \end{columns}
+%     \begin{itemize}
+%         \item Looks like a $1D$ Dirac equation with a mass domain wall, which we know host a zero mode at the domain wall. 
+%     \end{itemize}
+% \end{frame}
+
+\begin{frame}
+    \frametitle{Conclusions}
+
+    We find low energy criteria that guarantee the existence of the corner modes.
+    \vspace{10pt}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \underline{In $2$D}
+            \begin{itemize}
+                \item Dirac points in the normal state.
+                \item A $p+ip$ superconducting order parameter gapping the Dirac points.
+                \item With $C_4$ symmetry $\rightarrow$ second-order topology 
+                \item With $C_2$ symmetry $\rightarrow$ boundary-obstructed topology. 
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering 
+            \includegraphics[scale = 0.5]{HOTSc3.png}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Future work}
+    \underline{$3$D Higher-order topological superconductors}: 
+    \begin{itemize}
+        \item A natural extension to the Dirac + $p+ip$ project in $2$D is to look for higher-order topology in $3$D.
+        \item Starting from Weyl points in the normal state and adding $p + ip$ order-parameter. 
+    \end{itemize}
+    An example of such Hamiltonian: 
+    \begin{align*}
+        \mc H(\bm k) =& \[\gamma_x - 1 + \cos(k_x) + \cos(k_z)\] \sigma_x \tau_z - \mu \tau_z \\
+        + &\[\gamma_y  - 1 + \cos(k_y) + \cos(k_z)\] \sigma_z \tau_z  + \sin(k_x) \tau_y + \sin(k_y)\tau_x. 
+    \end{align*}
+    \begin{itemize}
+        \item Despite having a very similar look to the $2$D Hamiltonian, it turned out to have a lot of features that deserve a closer look. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Future work}
+    \underline{Applications in quantum computing?}
+    \begin{itemize}
+        \item Majorana zero mode can be used to implement a fault-tolerant quantum computer. \citet*{Kitaev_2003}
+        \item Usual platforms for obtaining the Majorana zero modes are the ends of $1$D topological superconductors or on the vortices of a $2$D topological superconductors. 
+        \item The method proposed to manipulate these Majorana modes are not easily implemented experimentally. 
+        \item The Majorana zero modes at the corners of a higher-order topological superconductor offers a new platform, for which we can try and look for easier ways of manipulating the Majorana modes. 
+    \end{itemize}
+\end{frame}
+
+\bibliographystyle{plainnat}
+\bibliography{reference}
+\end{document} 
