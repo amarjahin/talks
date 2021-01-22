@@ -1,4 +1,0 @@
-\beamer@sectionintoc {2}{Spin-waves for 1D AFM}{10}{0}{1}
-\beamer@sectionintoc {3}{Lieb-Shultz-Mattis theorem}{23}{0}{2}
-\beamer@sectionintoc {4}{Solvable models and valence bond solid states}{31}{0}{3}
-\beamer@sectionintoc {5}{Symmetry of the VBS state}{63}{0}{4}
