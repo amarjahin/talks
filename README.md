@@ -1,1 +1,1 @@
-Scientific talks I given on various topics.  
+Scientific talks I gave on various topics.  
